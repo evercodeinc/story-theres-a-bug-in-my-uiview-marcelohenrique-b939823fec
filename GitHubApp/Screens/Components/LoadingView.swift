@@ -5,6 +5,7 @@ final class LoadingView: UIView {
     private lazy var activityIndicatorView: UIActivityIndicatorView = {
       
         let view = UIActivityIndicatorView(style: .large)
+        view.startAnimating()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
