@@ -2,9 +2,29 @@ import UIKit
 
 final class LoadingView: UIView {
     
+    private lazy var stackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 16
+        stack.translatesAutoresizingMaskIntoConstraints = false
+
+        return stack
+    }()
+    
+    private lazy var loadingLabel: UILabel = {
+        let label = UILabel()
+        
+        label.text = "Loading..."
+        label.font = UIFont.systemFont(ofSize: 21, weight: .semibold)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private lazy var activityIndicatorView: UIActivityIndicatorView = {
       
         let view = UIActivityIndicatorView(style: .large)
+        view.startAnimating()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -15,7 +35,7 @@ final class LoadingView: UIView {
         self.backgroundColor = .white
         
         addSubviews()
-        configureConstraints()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -24,15 +44,23 @@ final class LoadingView: UIView {
     
     func addSubviews() {
         
-        addSubview(activityIndicatorView)
+        addSubview(stackView)
+        self.stackView.addArrangedSubview(loadingLabel)
+        self.stackView.addArrangedSubview(activityIndicatorView)
+        
     }
     
-    func configureConstraints() {
-        
+    func setupConstraints(){
+        configureConstraintsStack()
+
+    }
+    
+    func configureConstraintsStack(){
+
         NSLayoutConstraint.activate([
-        
-            activityIndicatorView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            activityIndicatorView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
     }
 }
